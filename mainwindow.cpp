@@ -23,6 +23,9 @@ void MainWindow::initial()
 
     //设置窗口标题
     setWindowTitle(GAME_TITLE);
+    
+    //设置图标资源
+    setWindowIcon(QIcon(GAME_ICON));
 
     //设置定时器帧率
     Timer.setInterval(GAME_RATE);
