@@ -1,7 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include<QDebug>
-
+#include<QtMultimedia/QMediaPlayer>
+#include<QtMultimedia/QAudioOutput>
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -22,9 +23,6 @@ void MainWindow::initial()
 
     //设置窗口标题
     setWindowTitle(GAME_TITLE);
-
-//图标
-
 
     //设置定时器帧率
     Timer.setInterval(GAME_RATE);
@@ -202,7 +200,14 @@ void MainWindow::updatePosition()
             if(bird.sound==0){
 
 
-//声音
+                QAudioOutput *audioOutput=new  QAudioOutput(this);
+                QMediaPlayer *startwhistle=new QMediaPlayer(this);
+                startwhistle->setAudioOutput(audioOutput );
+                audioOutput->setVolume(0.8);
+                startwhistle->setSource(QUrl(BIRD_DROP_SOUND));
+                startwhistle->play();
+
+
                 bird.sound=1;
             }
         }
@@ -235,7 +240,13 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
         if(start==0)
         {
             start=1;
-//声音
+            QAudioOutput *audioOutput=new  QAudioOutput(this);
+            QMediaPlayer *startwhistle=new QMediaPlayer(this);
+            startwhistle->setAudioOutput(audioOutput );
+            audioOutput->setVolume(0.8);
+            startwhistle->setSource(QUrl(BIRD_FLAP1_SOUND));
+            startwhistle->play();
+
         }
     }
     bird.setposition(bird.m_x,y);
@@ -277,7 +288,12 @@ void MainWindow::score()
     if(bird.m_x>=tube[point].m_x&&bird.m_x<=tube[point].m_x+tube[point].rec.width()&&gameover.state==0)
     {
         point++;
-//声音
+        QAudioOutput *audioOutput=new  QAudioOutput(this);
+        QMediaPlayer *startwhistle=new QMediaPlayer(this);
+        startwhistle->setAudioOutput(audioOutput );
+        audioOutput->setVolume(0.8);
+        startwhistle->setSource(QUrl(BIRD_SCORE_SOUND));
+        startwhistle->play();
     }
 }
 void MainWindow::speedup()
